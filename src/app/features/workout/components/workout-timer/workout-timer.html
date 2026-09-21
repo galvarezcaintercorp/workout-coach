@@ -1,0 +1,59 @@
+<mat-toolbar color="primary">
+  <mat-icon>fitness_center</mat-icon>
+  <span class="workout__toolbar-title">Workout Coach</span>
+</mat-toolbar>
+
+<div class="workout">
+  <mat-card *ngIf="loading" class="workout__card">
+    <mat-card-content class="workout__loading">
+      <mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
+      <span>Cargando entrenamiento...</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card
+    *ngIf="!loading && workout"
+    class="workout__card"
+    [ngClass]="{ 'workout__card--rest': phase === 'rest', 'workout__card--work': phase === 'work' }">
+    <mat-card-header>
+      <mat-card-title>{{ workout.exercise_name }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ phase === 'work' ? 'Repetición' : phase === 'rest' ? 'Descanso' : finished ? 'Entrenamiento terminado' : 'Listo para empezar' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="workout__clock">
+        {{ (secondsLeft - (secondsLeft % 60)) / 60 < 10 ? '0' : '' }}{{ (secondsLeft - (secondsLeft % 60)) / 60 }}:{{ secondsLeft % 60 < 10 ? '0' : '' }}{{ secondsLeft % 60 }}
+      </div>
+
+      <mat-progress-bar
+        mode="determinate"
+        [value]="workout.repetitions_number > 0 ? (repetitionsDone * 100) / workout.repetitions_number : 0">
+      </mat-progress-bar>
+
+      <mat-chip-set class="workout__chips">
+        <mat-chip>Repeticiones: {{ repetitionsDone }} / {{ workout.repetitions_number }}</mat-chip>
+      </mat-chip-set>
+    </mat-card-content>
+
+    <mat-card-actions class="workout__actions">
+      <button mat-fab color="primary" aria-label="Iniciar" (click)="play()" [disabled]="running || finished">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button mat-fab color="accent" aria-label="Pausar" (click)="pause()" [disabled]="!running">
+        <mat-icon>pause</mat-icon>
+      </button>
+      <button mat-fab color="warn" aria-label="Reiniciar" (click)="reset()">
+        <mat-icon>restart_alt</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<mat-card *ngIf="message" class="workout__toast" [ngClass]="{ 'workout__toast--out': toastLeaving }">
+  <mat-card-content class="workout__toast-content">
+    <mat-icon>notifications_active</mat-icon>
+    <span>{{ message }}</span>
+  </mat-card-content>
+</mat-card>

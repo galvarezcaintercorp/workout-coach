@@ -1,0 +1,99 @@
+.workout__toolbar-title {
+  margin-left: 12px;
+}
+
+.workout {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.workout__card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.workout__card--work {
+  background-color: #dcfce7;
+}
+
+.workout__card--rest {
+  background-color: #dbeafe;
+}
+
+.workout__card mat-card-header {
+  display: block;
+}
+
+.workout__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.workout__clock {
+  font-size: 64px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 16px 0;
+  line-height: 1.5;
+}
+
+.workout__chips {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.workout__actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.workout__toast {
+  position: fixed;
+  top: 88px;
+  left: 0;
+  z-index: 1000;
+  border-radius: 0 10px 10px 0;
+  animation: workoutToastIn 0.5s ease-out both;
+}
+
+.workout__toast--out {
+  animation: workoutToastOut 0.5s ease-in both;
+}
+
+.workout__toast-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+}
+
+@keyframes workoutToastIn {
+  from {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes workoutToastOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+}
